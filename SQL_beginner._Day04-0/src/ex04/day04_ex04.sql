@@ -1,0 +1,26 @@
+CREATE OR REPLACE VIEW V_SYMMETRIC_UNION AS 
+	( (
+	        SELECT person_id
+	        FROM person_visits
+	        WHERE
+	            visit_date = '2022-01-02'
+	        EXCEPT
+	        SELECT person_id
+	        FROM person_visits
+	        WHERE
+	            visit_date IN ('2022-01-06')
+	    )
+	    UNION (
+	        SELECT person_id
+	        FROM person_visits
+	        WHERE
+	            visit_date = '2022-01-06'
+	        EXCEPT
+	        SELECT person_id
+	        FROM person_visits
+	        WHERE
+	            visit_date IN ('2022-01-02')
+	    )
+	    ORDER BY person_id
+	);
+; 
